@@ -2,30 +2,25 @@
   "version": 2,
   "builds": [
     {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/dist"
+      }
+    },
+    {
       "src": "backend/main.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/delete_contact",
-      "methods": ["DELETE"],
+      "src": "/api/(.*)",
       "dest": "/backend/main.py"
     },
     {
-      "src": "/update_contact",
-      "methods": ["PATCH"],
-      "dest": "/backend/main.py"
-    },
-    {
-      "src": "/create_contact",
-      "methods": ["POST"],
-      "dest": "/backend/main.py"
-    },
-    {
-      "src": "/contacts",
-      "methods": ["GET"],
-      "dest": "/backend/main.py"
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
     }
   ]
 }
